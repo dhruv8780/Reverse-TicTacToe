@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Reverse Tic Tac Toe</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+    <ul>
+
+        <li id="p1">Player O: 0</li>
+        <li id="turn">Turn :</li>
+        <li id="p2">Player X: 0</li>
+    </ul>
+        <hr>
+    <table boder="2">
+        <tr>
+            <td onclick="bclick(0)"></td>
+            <td onclick='bclick(1)'></td>
+            <td onclick='bclick(2)'></td>
+        </tr>
+        <tr>
+            <td onclick='bclick(3)'></td>
+            <td onclick='bclick(4)'></td>
+            <td onclick='bclick(5)'></td>
+        </tr>
+        <tr>
+            <td onclick='bclick(6)'></td>
+            <td onclick='bclick(7)'></td>
+            <td onclick='bclick(8)'></td>
+        </tr>
+    </table>
+    <div id="win"></div>
+    <button onclick="newgame()">New Game</button>
+    </body>
+    <script>
+    alert("it's reverse tic tac toe, which means player who is forced to placed OorX in all three boxes loose the match")
+    var turn= document.getElementById("turn");
+    var p1= document.getElementById("p1");
+    var p2= document.getElementById("p2");
+    var x = document.getElementsByTagName("TD");
+    var y = "O"
+    var z = "X"
+    var l = 0;
+    var m = 0;
+    turn.innerHTML ="Turn : " + y;
+    var p1c = [];
+    var p2c = [];
+    var chance = 0;
+
+ //   p2.innerHTML+=" "+ z;
+    count= 0
+function bclick(a){
+          count++;
+
+          if(chance==0){
+          p1c.push(a);
+          turn.innerHTML = "Turn : "+z
+          x[a].innerHTML = y;
+          checkwins(p1c,"player 2 win",count,p1,0)
+          chance=1;
+          x[a].style.pointerEvents = 'none';
+
+
+
+        }else{
+          x[a].innerHTML = z;
+          p2c.push(a);
+          turn.innerHTML = "Turn : "+y
+          checkwins(p2c , "player one win",count,p2,1)
+
+          chance=0;
+          x[a].style.pointerEvents = 'none';
+        }
+}
+function checkwins(u,text,count,add,last){
+var allcon =[[0,1,2],[0,3,6],[1,4,7],[2,5,8],[3,4,5],[6,7,8],[0,4,8],[2,4,6]];
+
+   allcon.forEach( function (values,index) {
+
+   var wins = values.every(function(value){
+         return (u.indexOf(value) >= 0);
+         });
+
+
+   if(wins==true){
+
+        if(last ==0){
+        m++;
+        p2.innerHTML="player 0: "+ m;
+        }else{
+            l++;
+            p1.innerHTML = "player X: "+ l;
+        }
+        turn.innerHTML ="";
+        values.forEach(function(tdindex,index){
+
+
+        for(w=0;w<9;w++){
+         x[w].style.pointerEvents = 'none';
+    }
+
+        x[tdindex].style.backgroundColor= "dodgerblue"
+        document.getElementById("win").innerHTML = text
+        count=0;
+        })
+    }else if(count==9){
+     document.getElementById("win").innerHTML = "Match Tied"
+
+    }
+
+    })
+}
+function newgame(){
+
+        for(w=0;w<9;w++){
+         x[w].style.pointerEvents = 'auto';
+         x[w].innerHTML ="";
+         x[w].style.backgroundColor ='#f2f2f2'
+    }
+    document.getElementById("win").innerHTML = "";
+    chance =0;
+    while(p1c.length > 0) { p1c.pop(); }
+    while(p2c.length > 0) { p2c.pop(); }
+    count=0;
+    turn.innerHTML ="turn : " + y;
+    }
+</script>
+</html>
